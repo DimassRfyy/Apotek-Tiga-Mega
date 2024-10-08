@@ -33,6 +33,9 @@ class ProductTransactionResource extends Resource
                 Forms\Components\TextInput::make('address')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('quantity')
+                    ->required()
+                    ->numeric(),
                 Forms\Components\Toggle::make('is_paid')
                     ->required(),
                 Forms\Components\FileUpload::make('proof')
@@ -58,6 +61,8 @@ class ProductTransactionResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone_number')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('quantity')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('address')
                     ->searchable(),
