@@ -10,11 +10,11 @@
 <body>
     <main class="max-w-[640px] mx-auto min-h-screen flex flex-col relative has-[#Bottom-nav]:pb-[144px]">
         <div id="Top-navbar" class="flex items-center justify-between px-5 pt-5">
-            <a href="booking.html">
+            <a href="javascript:history.back()">
                 <div class="size-[44px] flex shrink-0">
                     <img src="{{ asset('assets/images/icons/arrow-left.svg') }}" alt="icon" />
                 </div>
-            </a>
+            </a>            
             <p class="text-lg leading-[27px] font-semibold">Checkout</p>
             <button class="size-[44px] flex shrink-0">
                 <img src="{{ asset('assets/images/icons/more.svg') }}" alt="icon" />
@@ -118,19 +118,7 @@
                 <div class="flex flex-col gap-4">
                     <div class="flex items-center justify-between">
                         <p>Sub total</p>
-                        <p id="Total" class="font-semibold"></p>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <p>PPN 10%</p>
-                        <p class="font-semibold"></p>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <p>Insurance</p>
-                        <p class="font-semibold"></p>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <p>Grand total</p>
-                        <p class="font-bold text-xl leading-[30px] underline"></p>
+                        <p id="Total" class="font-bold text-xl leading-[30px] underline"></p>
                     </div>
                 </div>
             </div>
@@ -143,7 +131,7 @@
                     </div>
                     <div class="flex flex-col gap-[2px]">
                         <div class="flex items-center w-fit gap-1">
-                            <p class="font-semibold">Sewa Angga Indonesia</p>
+                            <p class="font-semibold">Apotek Tiga Mega</p>
                             <div class="w-[18px] h-[18px] flex shrink-0">
                                 <img src="{{ asset('assets/images/icons/verify.svg') }}" alt="verify">
                             </div>
@@ -157,7 +145,7 @@
                     </div>
                     <div class="flex flex-col gap-[2px]">
                         <div class="flex items-center w-fit gap-1">
-                            <p class="font-semibold">Sewa Angga Indonesia</p>
+                            <p class="font-semibold">Apotek Tiga Mega</p>
                             <div class="w-[18px] h-[18px] flex shrink-0">
                                 <img src="{{ asset('assets/images/icons/verify.svg') }}" alt="verify">
                             </div>

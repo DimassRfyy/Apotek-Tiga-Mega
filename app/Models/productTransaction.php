@@ -12,6 +12,7 @@ class productTransaction extends Model
 
     protected $fillable = [
         'name',
+        'trx_id',
         'phone_number',
         'quantity',
         'address',
@@ -21,6 +22,15 @@ class productTransaction extends Model
         'note',
         'product_id',
     ];
+
+    public static function generateUniqueTrxId(){
+        $prefix = 'TGMG';
+        do {
+            $randomString = $prefix . mt_rand(1000, 9999);
+        } while (self::where('trx_id', $randomString)->exists());
+
+        return $randomString;
+    }
 
     public function product (): BelongsTo {
         return $this->belongsTo(product::class);

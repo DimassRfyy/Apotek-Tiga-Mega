@@ -7,6 +7,7 @@ use App\Filament\Resources\ProductTransactionResource\RelationManagers;
 use App\Models\ProductTransaction;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -19,11 +20,20 @@ class ProductTransactionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) ProductTransaction
+        ::where('is_paid', false)->count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('trx_id')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone_number')
@@ -60,6 +70,8 @@ class ProductTransactionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('trx_id')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('phone_number')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('quantity')
@@ -92,6 +104,21 @@ class ProductTransactionResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('approve')
+                ->label('Approve')
+                ->action( function (ProductTransaction $record) {
+                    $record->is_paid = true;
+                    $record->save();
+
+                    Notification::make()
+                    ->title('Transaction Approve')
+                    ->success()
+                    ->body('Transaction has been approved')
+                    ->send();
+                })
+                ->color('success')
+                ->requiresConfirmation()
+                ->visible(fn (ProductTransaction $record) => !$record->is_paid),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
