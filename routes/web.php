@@ -11,6 +11,8 @@ Route::post('/transactions/details',[FrontController::class,'transactions_detail
 
 Route::get('/category/{category:slug}',[FrontController::class,'category'])->name('front.category');
 
+Route::get('/category-all',[FrontController::class,'all_categories'])->name('front.all_categories');
+
 Route::get('/details/{product:slug}',[FrontController::class,'details'])->name('front.details');
 
 Route::get('/checkout/{product:slug}/payment', [FrontController::class, 'checkout'])->name('front.checkout');

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class FrontController extends Controller
 {
     public function index() {
-        $categories = category::all();
+        $categories = category::oldest()->take(3)->get();
         $latest_products = product::latest()->take(7)->get();
         $random_products = product::inRandomOrder()->take(7)->get();
         return view('front.index',compact('categories','latest_products','random_products'));
@@ -20,6 +20,11 @@ class FrontController extends Controller
 
     public function transactions() {
         return view('front.transactions');
+    }
+
+    public function all_categories () {
+        $categories = category::all();
+        return view('front.all_categories',compact('categories'));
     }
 
     public function category (category $category) {

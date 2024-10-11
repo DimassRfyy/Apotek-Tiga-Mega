@@ -51,7 +51,7 @@
 					<div class="size-5 flex shrink-0">
 						<img src="{{ asset('assets/images/icons/Star.svg') }}" alt="icon" class="size-full" />
 					</div>
-					<p class="font-semibold">4/5 <span class="font-normal text-[#6E6E70]">(777)</span></p>
+					<p class="font-semibold">4/5 <span class="font-normal text-[#6E6E70]">({{ $product->transactions->count() }})</span></p>
 				</div>
 			</div>
 			<div id="About" class="flex flex-col gap-1">
@@ -76,7 +76,7 @@
 							<div class="size-6 flex shrink-0">
 								<img src="{{ asset('assets/images/icons/dollar-circle.svg') }}" alt="icon" class="size-full" />
 							</div>
-							<p class="text-sm leading-[21px] font-semibold text-nowrap">More Points</p>
+							<p class="text-sm leading-[21px] font-semibold text-nowrap">Affordable Price</p>
 						</div>
 					</div>
 					<div
@@ -85,7 +85,7 @@
 							<div class="size-6 flex shrink-0">
 								<img src="{{ asset('assets/images/icons/location.svg') }}" alt="icon" class="size-full" />
 							</div>
-							<p class="text-sm leading-[21px] font-semibold text-nowrap">Fully GPS</p>
+							<p class="text-sm leading-[21px] font-semibold text-nowrap">Fast Service</p>
 						</div>
 					</div>
 					<div
@@ -99,8 +99,13 @@
 					</div>
 				</div>
 			</div>
+			<a id="promo" href="#" class="px-1 mt-[17px]">
+				<div class="w-full aspect-[353/100] flex shrink-0 overflow-hidden rounded-2xl">
+					<img src="{{ asset('assets/images/backgrounds/4.svg') }}" class="w-full h-full object-cover" alt="promo" />
+				</div>
+			</a>
 			<div id="Testimonials" class="flex flex-col gap-[14px]">
-				<h2 class="font-semibold">Testimonials</h2>
+				<h2 class="font-semibold mt-4">Testimonials</h2>
 				<div class="flex flex-col gap-4">
 					<!-- Testi -->
 					<div class="pb-4 border-b border-[#EDEEF0]">
@@ -131,7 +136,7 @@
 									</div>
 								</div>
 								<p class="text-xs leading-5 text-[#6E6E70]">Bagus produknya dan cepet banget dipakenya
-									anti ribet karena beberap app sudah ready</p>
+									anti ribet karena stock selalu ready</p>
 							</div>
 						</div>
 					</div>
@@ -164,7 +169,7 @@
 									</div>
 								</div>
 								<p class="text-xs leading-5 text-[#6E6E70]">Bagus produknya dan cepet banget dipakenya
-									anti ribet karena beberap app sudah ready</p>
+									anti ribet  karena stock selalu ready</p>
 							</div>
 						</div>
 					</div>
@@ -197,7 +202,7 @@
 									</div>
 								</div>
 								<p class="text-xs leading-5 text-[#6E6E70]">Bagus produknya dan cepet banget dipakenya
-									anti ribet karena beberap app sudah ready</p>
+									anti ribet  karena stock selalu ready</p>
 							</div>
 						</div>
 					</div>
