@@ -14,10 +14,13 @@
 				<a href="index.html" class="flex shrink-0">
 					<img src="assets/images/logos/logo-apotek.png" alt="logo" />
 				</a>
-				<a href="#" class="w-11 h-11 flex shrink-0">
-					<img src="assets/images/icons/notifications.svg" alt="icon" />
+				<a href="{{ route('front.search.product') }}" class="w-11 h-11 flex shrink-0">
+					<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="45" viewBox="0 0 30 30">
+						<path d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"></path>
+						</svg>
 				</a>
 			</div>
+
 			<section id="Categories" class="flex flex-col gap-[10px] mt-[30px] px-5">
 				<div class="flex justify-between items-center">
 					<h2 class="font-semibold text-lg leading-[27px]">By Categories</h2>
@@ -160,7 +163,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="">
+						<a href="{{ route('front.recipe') }}">
 							<div class="group flex flex-col items-center text-center gap-2 transition-all duration-300 hover:text-black text-[#9D9DAD]">
 								<div class="w-6 h-6 flex shrink-0">
 									<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -176,7 +179,7 @@
 										<path d="M9.11951 9.25H9.12849" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
 									</svg>
 								</div>
-								<p class="font-semibold text-sm leading-[21px] text-[]">Promos</p>
+								<p class="font-semibold text-sm leading-[21px] text-[]">Recipe</p>
 							</div>
 						</a>
 					</li>

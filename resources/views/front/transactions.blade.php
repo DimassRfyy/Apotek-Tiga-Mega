@@ -56,7 +56,7 @@
 					</div>
 				</div>
 				<div class="flex flex-col gap-2 items-center">
-					<h1 class="text-2xl leading-[36px] font-bold">Check Booking</h1>
+					<h1 class="text-2xl leading-[36px] font-bold">Check Orders</h1>
 					<p class="leading-[30px] text-[#6E6E70] text-center">Masukkan details berikut untuk melihat status pemesanan Anda saat ini</p>
 				</div>
 
@@ -87,7 +87,7 @@
 						</div>
 					</div>
 					<div class="flex flex-col gap-2">
-						<label for="bookId" class="font-semibold">Book ID</label>
+						<label for="bookId" class="font-semibold">Trx ID</label>
 						<div class="group w-full rounded-2xl border border-[#EDEEF0] p-[18px_14px] flex items-center gap-3 relative transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FCCF2F]">
 							<div class="w-6 h-6 flex shrink-0">
 								<img src="assets/images/icons/crown.svg" alt="icon" />
@@ -97,12 +97,12 @@
 								name="trx_id"
 								id="bookId"
 								class="appearance-none outline-none w-full placeholder:font-normal placeholder:text-black font-semibold text-sm leading-[24px]"
-								placeholder="Write your booking id"
+								placeholder="Write your Trx id"
 								required
 							/>
 						</div>
 					</div>
-					<button type="submit" class="rounded-full p-[12px_24px] bg-[#FCCF2F] font-bold w-full text-center">Check My Booking</button>
+					<button type="submit" class="rounded-full p-[12px_24px] bg-[#FCCF2F] font-bold w-full text-center">Check My Orders</button>
 				</form>
 			</section>
 			<div id="Bottom-nav" class="fixed bottom-0 max-w-[640px] w-full mx-auto border-t border-[#F1F1F1] overflow-hidden z-10">
@@ -129,7 +129,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="">
+						<a href="{{ route('front.transactions') }}">
 							<div class="group flex flex-col items-center text-center gap-2 transition-all duration-300 hover:text-black">
 								<div class="w-6 h-6 flex shrink-0">
 									<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -152,7 +152,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="">
+						<a href="{{ route('front.recipe') }}">
 							<div class="group flex flex-col items-center text-center gap-2 transition-all duration-300 hover:text-black text-[#9D9DAD]">
 								<div class="w-6 h-6 flex shrink-0">
 									<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -168,12 +168,12 @@
 										<path d="M9.11951 9.25H9.12849" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
 									</svg>
 								</div>
-								<p class="font-semibold text-sm leading-[21px] text-[]">Promos</p>
+								<p class="font-semibold text-sm leading-[21px] text-[]">Recipe</p>
 							</div>
 						</a>
 					</li>
 					<li>
-						<a href="">
+						<a href="/admin/login">
 							<div class="group flex flex-col items-center text-center gap-2 transition-all duration-300 hover:text-black text-[#9D9DAD]">
 								<div class="w-6 h-6 flex shrink-0">
 									<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -201,7 +201,7 @@
 										/>
 									</svg>
 								</div>
-								<p class="font-semibold text-sm leading-[21px] text-[]">Contact</p>
+								<p class="font-semibold text-sm leading-[21px] text-[]">Admin</p>
 							</div>
 						</a>
 					</li>

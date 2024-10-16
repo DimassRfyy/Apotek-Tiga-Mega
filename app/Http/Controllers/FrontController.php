@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTransactionRequest;
+use App\Http\Requests\UploadRecipeRequest;
 use App\Models\category;
 use App\Models\product;
 use App\Models\productTransaction;
+use App\Models\RecipeTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,11 +19,85 @@ class FrontController extends Controller
         $random_products = product::inRandomOrder()->take(7)->get();
         return view('front.index',compact('categories','latest_products','random_products'));
     }
+    
+    public function search_product (Request $request) {
+        
+        $query = $request->input('query');
 
+        $products = Product::where('name', 'like', "%{$query}%")->get();
+        
+        return view('front.search', ['products' => $products]);
+    }
     public function transactions() {
         return view('front.transactions');
     }
 
+    public function recipe() {
+        return view('front.recipe');
+    }
+    public function recipe_upload() {
+        return view('front.recipe_upload');
+    }
+    
+    public function recipe_store(UploadRecipeRequest $request) {
+        $transaction = DB::transaction(function () use ($request) {
+           
+            $validatedData = $request->validated();
+            
+            if ($request->hasFile('photo_recipe')) {
+                $photo_recipePath = $request->file('photo_recipe')->store('photo_recipes', 'public'); 
+                $validatedData['photo_recipe'] = $photo_recipePath;
+            }
+    
+            
+            return RecipeTransaction::create([
+                'name' => $validatedData['name'],
+                'photo_recipe' => $validatedData['photo_recipe'],
+                'trx_id' => RecipeTransaction::generateUniqueTrxId(),
+                'phone_number' => $validatedData['phone_number'],
+                'address' => $validatedData['address'],
+                'note' => $validatedData['note'] ?? null, // Jika note kosong, maka set null
+                'is_paid' => false,
+                'is_confirm' => false,
+                'proof' => null,
+                'total_amount' => null,
+            ]);
+        });
+
+        return redirect()->route('front.success.upload_recipe', ['transaction' => $transaction->id]);
+    }
+
+    public function success_upload_recipe(RecipeTransaction $transaction) {
+        return view('front.success_upload_recipe', compact('transaction'));
+    }
+
+    public function checkout_recipe(Request $request, $id) {
+       
+        $validated = $request->validate([
+            'proof' => 'required|file|mimes:jpg,jpeg,png',
+        ]);
+    
+        if ($request->hasFile('proof')) {
+            $proofPath = $request->file('proof')->store('proofs', 'public'); 
+        }
+    
+        // Cari transaksi berdasarkan id
+        $transaction = RecipeTransaction::findOrFail($id);
+    
+        // Update kolom proof dan tanda bahwa pembayaran sudah dikonfirmasi
+        $transaction->update([
+            'proof' => $proofPath,
+            'is_paid' => false,
+        ]);
+    
+        return redirect()->route('front.success.checkout_recipe', ['transaction' => $transaction->id]);
+    }
+
+    public function success_checkout_recipe (RecipeTransaction $transaction) {
+        return view('front.success_checkout_recipe', compact('transaction'));
+    }
+    
+    
     public function all_categories () {
         $categories = category::all();
         return view('front.all_categories',compact('categories'));
@@ -44,7 +120,7 @@ class FrontController extends Controller
 {
     // Gunakan DB::transaction untuk memastikan bahwa semua operasi berhasil dilakukan atau di-rollback jika ada yang gagal
     $transaction = DB::transaction(function () use ($request, $product) {
-        // Validasi data (karena menggunakan StoreTransactionRequest, validasi sudah dilakukan di sini)
+        
         $validatedData = $request->validated(); // Menggunakan data yang sudah divalidasi
 
         // Jika ada file yang diunggah, simpan file tersebut dan dapatkan path-nya
@@ -82,21 +158,33 @@ public function success_booking(ProductTransaction $transaction)
 
 public function transactions_details(Request $request){
     $request->validate([
-        'trx_id' => ['required','string','max:255'],
-        'phone_number' => ['required','string','max:255'],
+        'trx_id' => ['required', 'string', 'max:255'],
+        'phone_number' => ['required', 'string', 'max:255'],
     ]);
 
     $trx_id = $request->input('trx_id');
-        $phone_number = $request->input('phone_number');
-        $details = productTransaction::where('trx_id', $trx_id)->where('phone_number', $phone_number)->first();
-        if (!$details) {
-            return redirect()->back()->withErrors(['error' => 'transaction not found']);
-        }
+    $phone_number = $request->input('phone_number');
 
-        $quantity = $details->quantity;
-        $subTotal = $details->product->price * $quantity;
+    // Check if transaction exists in productTransaction
+    $productDetails = productTransaction::where('trx_id', $trx_id)->where('phone_number', $phone_number)->first();
 
-        return view('front.transactions_details', compact('details','subTotal'));
+    if ($productDetails) {
+        $quantity = $productDetails->quantity;
+        $subTotal = $productDetails->product->price * $quantity;
+        return view('front.transactions_details', compact('productDetails', 'subTotal'));
+    }
+
+    // Check if transaction exists in RecipeTransaction
+    $recipeDetails = RecipeTransaction::where('trx_id', $trx_id)->where('phone_number', $phone_number)->first();
+
+    if ($recipeDetails) {
+        $subTotal = $recipeDetails->total_amount;
+        return view('front.recipe_details', compact('recipeDetails','subTotal'));
+    }
+
+    // If no transaction is found
+    return redirect()->back()->withErrors(['error' => 'transaction not found']);
 }
+
 
 }

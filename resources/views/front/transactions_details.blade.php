@@ -15,7 +15,7 @@
                     <img src="{{ asset('assets/images/icons/arrow-left.svg') }}" alt="icon" />
                 </div>
             </a>
-            <p class="text-lg leading-[27px] font-semibold">Booking Details</p>
+            <p class="text-lg leading-[27px] font-semibold">Transactions Details</p>
             <button class="size-[44px] flex shrink-0">
                 <img src="{{ asset('assets/images/icons/more.svg') }}" alt="icon" />
             </button>
@@ -26,13 +26,13 @@
                     <img src="{{ asset('assets/images/icons/crown-circle.svg') }}" alt="icon">
                 </div>
                 <div class="flex flex-col">
-                    <p class="font-semibold">{{ $details->trx_id }}</p>
-                    <p class="text-sm leading-[21px] text-[#6E6E70]">Protect your booking ID</p>
+                    <p class="font-semibold">{{ $productDetails->trx_id }}</p>
+                    <p class="text-sm leading-[21px] text-[#6E6E70]">Protect your Trx ID</p>
                 </div>
             </div>
             <hr class="border-[#EDEEF0]">
 
-            @if ($details->is_paid)
+            @if ($productDetails->is_paid)
             <div id="Payment-success" class="flex items-center rounded-2xl p-[14px_16px] gap-4 bg-black text-white">
                 <div class="w-6 h-6 flex shrink-0">
                     <img src="{{ asset('assets/images/icons/note-white.svg') }}" alt="icon">
@@ -44,7 +44,7 @@
                             <img src="{{ asset('assets/images/icons/verify.svg') }}" alt="icon">
                         </div>
                     </div>
-                    <p class="text-xs leading-[18px]">Pembayaran Anda sudah kami terima dan silahkan menunggu instruksi selanjutnya</p>
+                    <p class="text-xs leading-[18px]">Pembayaran Anda sudah kami terima dan kami akan segera mengirim pesanan anda</p>
                 </div>
             </div>
             @else
@@ -56,7 +56,7 @@
                     <div class="flex items-center gap-1">
                         <p class="font-semibold text-sm leading-[21px]">Payment Pending</p>
                     </div>
-                    <p class="text-xs leading-[18px]">Tim kami sedang memeriksa transaksi ada pada booking berikut</p>
+                    <p class="text-xs leading-[18px]">Admin sedang memeriksa transaksi, hubungi CS jika transaksi anda blm juga diproses</p>
                 </div>
             </div>
             @endif
@@ -66,11 +66,11 @@
             <div class="flex items-center gap-[14px]">
                 <div class="w-20 h-20 flex shrink-0 rounded-2xl overflow-hidden bg-[#F6F6F6] items-center">
                     <div class="w-full h-[50px] flex shrink-0 justify-center">
-                        <img src="{{ Storage::url($details->product->photo) }}" class="h-full w-full object-contain" alt="thumbnail">
+                        <img src="{{ Storage::url($productDetails->product->photo) }}" class="h-full w-full object-contain" alt="thumbnail">
                     </div>
                 </div>
                 <div class="w-full flex flex-col gap-2">
-                    <p class="font-bold text-lg leading-[27px]">{{ $details->product->name }}</p>
+                    <p class="font-bold text-lg leading-[27px]">{{ $productDetails->product->name }}</p>
                     <div class="flex items-center gap-[14px]">
                         <div class="flex items-center w-fit gap-1">
                             <p class="font-semibold text-sm leading-[21px] text-[#6E6E70]">Original 100%</p>
@@ -95,7 +95,7 @@
                             <img src="{{ asset('assets/images/icons/user.svg') }}" alt="icon">
                         </div>
                         <div class="flex flex-col gap-1">
-                            <p class="font-semibold">{{ $details->name }}</p>
+                            <p class="font-semibold">{{ $productDetails->name }}</p>
                         </div>
                     </div>
                 </div>
@@ -106,18 +106,18 @@
                             <img src="{{ asset('assets/images/icons/call.svg') }}" alt="icon">
                         </div>
                         <div class="flex flex-col gap-1">
-                            <p class="font-semibold">{{ $details->phone_number }}</p>
+                            <p class="font-semibold">{{ $productDetails->phone_number }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="info-card flex flex-col gap-2">
-                    <p class="font-semibold">Started At</p>
+                    <p class="font-semibold">Tanggal</p>
                     <div class="flex items-center rounded-2xl p-[18px_14px] gap-3 bg-[#F4F4F6]">
                         <div class="w-6 h-6 flex shrink-0">
                             <img src="{{ asset('assets/images/icons/calendar.svg') }}" alt="icon">
                         </div>
                         <div class="flex flex-col gap-1">
-                            <p class="font-semibold">{{ $details->updated_at->translatedFormat('j F Y') }}</p>
+                            <p class="font-semibold">{{ $productDetails->updated_at->translatedFormat('j F Y') }}</p>
                         </div>
                     </div>
                 </div>
@@ -128,7 +128,7 @@
                             <img src="{{ asset('assets/images/icons/calendar.svg') }}" alt="icon">
                         </div>
                         <div class="flex flex-col gap-1">
-                            <p class="font-semibold">{{ $details->quantity }}</p>
+                            <p class="font-semibold">{{ $productDetails->quantity }}</p>
                         </div>
                     </div>
                 </div>
@@ -142,7 +142,7 @@
                         </div>
                         <div class="flex flex-col gap-1">
                             <p class="font-semibold"></p>
-                            <p class="text-sm leading-[21px] text-[#6E6E70]">{{ $details->note }}</p>
+                            <p class="text-sm leading-[21px] text-[#6E6E70]">{{ $productDetails->note }}</p>
                         </div>
                     </div>
                 </div>
@@ -156,7 +156,7 @@
                             <img src="{{ asset('assets/images/icons/house-2.svg') }}" alt="icon">
                         </div>
                         <div class="flex flex-col gap-1">
-                            <p class="font-semibold">{{ $details->address }}</p>
+                            <p class="font-semibold">{{ $productDetails->address }}</p>
                         </div>
                     </div>
                 </div>
