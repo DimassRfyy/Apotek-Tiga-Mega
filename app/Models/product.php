@@ -16,6 +16,7 @@ class product extends Model
         'photo',
         'description',
         'price',
+        'rate',
         'category_id',
     ];
 
@@ -25,6 +26,10 @@ class product extends Model
 
     public function transactions ():HasMany {
         return $this->hasMany(productTransaction::class);
+    }
+
+    public function testimonials (): HasMany {
+        return $this->hasMany(testimonial::class);
     }
 
     public function setNameAttribute($value)

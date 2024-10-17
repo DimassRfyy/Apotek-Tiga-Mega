@@ -69,7 +69,7 @@
 											<div class="w-4 h-4 flex shrink-0">
 												<img src="assets/images/icons/Star 1.svg" alt="star" />
 											</div>
-											<p class="font-semibold text-sm leading-[21px]">4/5</p>
+											<p class="font-semibold text-sm leading-[21px]">{{ $item->rate }}</p>
 										</div>
 									</div>
 								</div>
@@ -103,7 +103,7 @@
 										<div class="w-4 h-4 flex shrink-0">
 											<img src="assets/images/icons/Star 1.svg" alt="star" />
 										</div>
-										<p class="text-sm leading-[21px]"><span class="font-semibold">4/5</span> <span class="text-[#6E6E70]">({{ $item->transactions->count() }})</span></p>
+										<p class="text-sm leading-[21px]"><span class="font-semibold">{{ $item->rate }}</span> <span class="text-[#6E6E70]">({{ $item->transactions->count() }})</span></p>
 									</div>
 								</div>
 							</div>

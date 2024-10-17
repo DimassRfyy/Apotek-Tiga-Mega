@@ -18,7 +18,9 @@ class ProductTransactionResource extends Resource
 {
     protected static ?string $model = ProductTransaction::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-credit-card';
+
+    protected static ?string $navigationGroup = 'Transactions';
 
     public static function getNavigationBadge(): ?string
     {

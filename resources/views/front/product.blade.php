@@ -51,7 +51,7 @@
 					<div class="size-5 flex shrink-0">
 						<img src="{{ asset('assets/images/icons/Star.svg') }}" alt="icon" class="size-full" />
 					</div>
-					<p class="font-semibold">4/5 <span class="font-normal text-[#6E6E70]">({{ $product->transactions->count() }})</span></p>
+					<p class="font-semibold">{{ $product->rate }} <span class="font-normal text-[#6E6E70]">({{ $product->transactions->count() }})</span></p>
 				</div>
 			</div>
 			<div id="About" class="flex flex-col gap-1">
@@ -108,15 +108,16 @@
 				<h2 class="font-semibold mt-4">Testimonials</h2>
 				<div class="flex flex-col gap-4">
 					<!-- Testi -->
+					@foreach ($product->testimonials as $testi)
 					<div class="pb-4 border-b border-[#EDEEF0]">
 						<div class="flex gap-3">
 							<!-- photo -->
 							<div class="size-[50px] flex shrink-0 rounded-full overflow-hidden">
-								<img src="{{ asset('assets/images/photos/photo-1.png') }}" alt="icon" class="size-full" />
+								<img src="{{ Storage::url($testi->avatar) }}" alt="icon" class="size-full" />
 							</div>
 							<div class="flex flex-col gap-[6px] w-full">
 								<div class="flex items-center justify-between">
-									<p class="text-sm leading-[21px] font-semibold">Sara Putri</p>
+									<p class="text-sm leading-[21px] font-semibold">{{ $testi->name }}</p>
 									<div class="flex gap-[2px]">
 										<div class="size-5 flex shrink-0">
 											<img src="{{ asset('assets/images/icons/Star.svg') }}" alt="icon" class="size-full" />
@@ -135,77 +136,11 @@
 										</div>
 									</div>
 								</div>
-								<p class="text-xs leading-5 text-[#6E6E70]">Bagus produknya dan cepet banget dipakenya
-									anti ribet karena stock selalu ready</p>
+								<p class="text-xs leading-5 text-[#6E6E70]">{{ $testi->message }}</p>
 							</div>
 						</div>
 					</div>
-					<!-- Testi -->
-					<div class="pb-4 border-b border-[#EDEEF0]">
-						<div class="flex gap-3">
-							<!-- photo -->
-							<div class="size-[50px] flex shrink-0 rounded-full overflow-hidden">
-								<img src="{{ asset('assets/images/photos/photo-2.png') }}" alt="icon" class="size-full" />
-							</div>
-							<div class="flex flex-col gap-[6px] w-full">
-								<div class="flex items-center justify-between">
-									<p class="text-sm leading-[21px] font-semibold">Sara Putri</p>
-									<div class="flex gap-[2px]">
-										<div class="size-5 flex shrink-0">
-											<img src="{{ asset('assets/images/icons/Star.svg') }}" alt="icon" class="size-full" />
-										</div>
-										<div class="size-5 flex shrink-0">
-											<img src="{{ asset('assets/images/icons/Star.svg') }}" alt="icon" class="size-full" />
-										</div>
-										<div class="size-5 flex shrink-0">
-											<img src="{{ asset('assets/images/icons/Star.svg') }}" alt="icon" class="size-full" />
-										</div>
-										<div class="size-5 flex shrink-0">
-											<img src="{{ asset('assets/images/icons/Star.svg') }}" alt="icon" class="size-full" />
-										</div>
-										<div class="size-5 flex shrink-0">
-											<img src="{{ asset('assets/images/icons/Star.svg') }}" alt="icon" class="size-full" />
-										</div>
-									</div>
-								</div>
-								<p class="text-xs leading-5 text-[#6E6E70]">Bagus produknya dan cepet banget dipakenya
-									anti ribet  karena stock selalu ready</p>
-							</div>
-						</div>
-					</div>
-					<!-- Testi -->
-					<div class="pb-4">
-						<div class="flex gap-3">
-							<!-- photo -->
-							<div class="size-[50px] flex shrink-0 rounded-full overflow-hidden">
-								<img src="{{ asset('assets/images/photos/photo-3.png') }}" alt="icon" class="size-full" />
-							</div>
-							<div class="flex flex-col gap-[6px] w-full">
-								<div class="flex items-center justify-between">
-									<p class="text-sm leading-[21px] font-semibold">Sara Putri</p>
-									<div class="flex gap-[2px]">
-										<div class="size-5 flex shrink-0">
-											<img src="{{ asset('assets/images/icons/Star.svg') }}" alt="icon" class="size-full" />
-										</div>
-										<div class="size-5 flex shrink-0">
-											<img src="{{ asset('assets/images/icons/Star.svg') }}" alt="icon" class="size-full" />
-										</div>
-										<div class="size-5 flex shrink-0">
-											<img src="{{ asset('assets/images/icons/Star.svg') }}" alt="icon" class="size-full" />
-										</div>
-										<div class="size-5 flex shrink-0">
-											<img src="{{ asset('assets/images/icons/Star.svg') }}" alt="icon" class="size-full" />
-										</div>
-										<div class="size-5 flex shrink-0">
-											<img src="{{ asset('assets/images/icons/Star.svg') }}" alt="icon" class="size-full" />
-										</div>
-									</div>
-								</div>
-								<p class="text-xs leading-5 text-[#6E6E70]">Bagus produknya dan cepet banget dipakenya
-									anti ribet  karena stock selalu ready</p>
-							</div>
-						</div>
-					</div>
+					@endforeach	
 				</div>
 			</div>
 		</section>

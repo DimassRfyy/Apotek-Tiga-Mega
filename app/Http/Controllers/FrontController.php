@@ -84,7 +84,6 @@ class FrontController extends Controller
         // Cari transaksi berdasarkan id
         $transaction = RecipeTransaction::findOrFail($id);
     
-        // Update kolom proof dan tanda bahwa pembayaran sudah dikonfirmasi
         $transaction->update([
             'proof' => $proofPath,
             'is_paid' => false,

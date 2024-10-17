@@ -2,22 +2,25 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\RecipeTransactionResource\Pages;
-use App\Filament\Resources\RecipeTransactionResource\RelationManagers;
-use App\Models\RecipeTransaction;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use App\Models\RecipeTransaction;
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\RecipeTransactionResource\Pages;
+use App\Filament\Resources\RecipeTransactionResource\RelationManagers;
 
 class RecipeTransactionResource extends Resource
 {
     protected static ?string $model = RecipeTransaction::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-newspaper';
+
+    protected static ?string $navigationGroup = 'Transactions';
 
     public static function getNavigationBadge(): ?string
     {
@@ -101,6 +104,21 @@ class RecipeTransactionResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('approve')
+                ->label('Approve')
+                ->action( function (RecipeTransaction $record) {
+                    $record->is_paid = true;
+                    $record->save();
+
+                    Notification::make()
+                    ->title('Transaction Approve')
+                    ->success()
+                    ->body('Transaction has been approved')
+                    ->send();
+                })
+                ->color('success')
+                ->requiresConfirmation()
+                ->visible(fn (RecipeTransaction $record) => !$record->is_paid),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -106,8 +106,8 @@
                     <div class="w-6 h-6 flex shrink-0">
                         <img src="{{ asset('assets/images/icons/ticket-discount-black.svg') }}" alt="icon" />
                     </div>
-                    <p class="text-sm leading-[24px] text-[#6E6E70]">Biaya kirim barang gratis untuk seluruh
-                        pulau Jawa, please enjoy!</p>
+                    <p class="text-sm leading-[24px] text-[#6E6E70]">Biaya kirim barang gratis untuk wilayah
+                        Kota Tasikamalaya, please enjoy!</p>
                 </div>
                 
                 
