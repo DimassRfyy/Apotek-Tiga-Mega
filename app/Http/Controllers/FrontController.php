@@ -24,7 +24,7 @@ class FrontController extends Controller
         
         $query = $request->input('query');
 
-        $products = Product::where('name', 'like', "%{$query}%")->get();
+        $products = Product::where('name', 'like', "%{$query}%")->paginate(6);
         
         return view('front.search', ['products' => $products]);
     }

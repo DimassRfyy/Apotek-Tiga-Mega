@@ -29,6 +29,8 @@ class ProductResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('photo')
+                    ->disk('public')
+                    ->directory('products')
                      ->image()
                      ->required(),
                 Forms\Components\Textarea::make('description')

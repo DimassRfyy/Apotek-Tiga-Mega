@@ -30,6 +30,8 @@ class TestimonialResource extends Resource
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('avatar')
                     ->required()
+                    ->disk('public')
+                    ->directory('testimonials')
                     ->openable()
                     ->image(),
                 Forms\Components\TextInput::make('message')

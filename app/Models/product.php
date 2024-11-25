@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 class product extends Model
 {
@@ -36,5 +37,22 @@ class product extends Model
     {
         $this->attributes['name'] = $value;
         $this->attributes['slug'] = Str::slug($value);
+    }
+    
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($product) {
+            if ($product->photo) {
+                Storage::delete($product->photo);
+            }
+        });
+
+        static::updating(function ($product) {
+            if ($product->isDirty('photo')) {
+                Storage::delete($product->getOriginal('photo'));
+            }
+        });
     }
 }

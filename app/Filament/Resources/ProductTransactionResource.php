@@ -24,8 +24,7 @@ class ProductTransactionResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return (string) ProductTransaction
-        ::where('is_paid', false)->count();
+        return (string) productTransaction::where('is_paid', false)->count();
     }
 
     public static function form(Form $form): Form
@@ -52,6 +51,8 @@ class ProductTransactionResource extends Resource
                     ->required(),
                 Forms\Components\FileUpload::make('proof')
                     ->required()
+                    ->disk('public')
+                    ->directory('proofs')
                     ->openable()
                     ->image(),
                 Forms\Components\TextInput::make('total_amount')
@@ -86,6 +87,7 @@ class ProductTransactionResource extends Resource
                 Tables\Columns\ImageColumn::make('proof')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('total_amount')
+                ->label('Total Harga')
                 ->prefix('Rp ')
                 ->numeric()
                 ->sortable(),
@@ -105,7 +107,7 @@ class ProductTransactionResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\Action::make('approve')
                 ->label('Approve')
                 ->action( function (ProductTransaction $record) {

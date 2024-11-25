@@ -11,8 +11,8 @@
 	<body>
 		<main class="max-w-[640px] mx-auto min-h-screen flex flex-col relative has-[#Bottom-nav]:pb-[144px]">
 			<div id="Top-navbar" class="flex items-center justify-between pt-5 px-5">
-				<a href="index.html" class="flex shrink-0">
-					<img src="assets/images/logos/logo-apotek.png" alt="logo" />
+				<a href="{{ route('front.index') }}" class="flex shrink-0">
+					<img src="assets/images/logos/logoapotek.png" alt="logo" />
 				</a>
 				<a href="{{ route('front.search.product') }}" class="w-11 h-11 flex shrink-0">
 					<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="45" viewBox="0 0 30 30">

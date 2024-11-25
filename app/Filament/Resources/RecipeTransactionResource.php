@@ -55,6 +55,8 @@ class RecipeTransactionResource extends Resource
                     ->required(),
                 Forms\Components\FileUpload::make('proof')
                     ->openable()
+                    ->disk('public')
+                    ->directory('proofs')
                     ->image()
                     ->default(null),
                     Forms\Components\TextInput::make('total_amount')
@@ -103,6 +105,7 @@ class RecipeTransactionResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('approve')
                 ->label('Approve')

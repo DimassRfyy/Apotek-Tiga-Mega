@@ -67,6 +67,7 @@
         </a>
         @endforeach
 </div>  
+{{ $products->links() }}
 @else
     <p>Produk tidak ditemukan.</p>
 @endif
