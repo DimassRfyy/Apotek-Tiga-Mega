@@ -9,7 +9,7 @@ use App\Models\RecipeTransaction;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
-class StatsOverview extends BaseWidget
+class ZStatsOverview extends BaseWidget
 {
     protected function getStats(): array
     {
