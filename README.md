@@ -27,7 +27,7 @@
 
 <p></p>
 
-<h2 id="tentang">⚽ Tentang Website Apotek Tiga Mega</h2>
+<h2 id="tentang">💊 Tentang Website Apotek Tiga Mega</h2>
 
 Website ini digunakan untuk pihak Apotek dan juga customers untuk melakukan proses pembelian product (Obat) dan juga pembuatan resep dokter. Pihak apotek dapat melakukan management resource dan juga memantau pembelian obat dan juga layanan pembuatan resep dokter.
 
