@@ -1,12 +1,15 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="{{ asset('output.css') }}" rel="stylesheet" />
-	    <link href="{{ asset('main.css') }}" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    </head>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ asset('output.css') }}" rel="stylesheet" />
+    <link href="{{ asset('main.css') }}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+</head>
+
 <body>
     <main class="max-w-[640px] mx-auto min-h-screen flex flex-col relative has-[#Bottom-nav]:pb-[144px]">
         <div id="Top-navbar" class="flex items-center justify-between px-5 pt-5">
@@ -33,40 +36,128 @@
             <hr class="border-[#EDEEF0]">
 
             @if ($productDetails->is_paid)
-            <div id="Payment-success" class="flex items-center rounded-2xl p-[14px_16px] gap-4 bg-black text-white">
-                <div class="w-6 h-6 flex shrink-0">
-                    <img src="{{ asset('assets/images/icons/note-white.svg') }}" alt="icon">
+                <div id="Payment-success" class="flex items-center rounded-2xl p-[14px_16px] gap-4 bg-black text-white">
+                    <div class="w-6 h-6 flex shrink-0">
+                        <img src="{{ asset('assets/images/icons/note-white.svg') }}" alt="icon">
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <div class="flex items-center gap-1">
+                            <p class="font-semibold text-sm leading-[21px]">Payment Success</p>
+                            <div class="w-5 h-5 flex shrink-0">
+                                <img src="{{ asset('assets/images/icons/verify.svg') }}" alt="icon">
+                            </div>
+                        </div>
+                        <p class="text-xs leading-[18px]">Pembayaran Anda sudah kami terima dan kami akan segera mengirim
+                            pesanan anda</p>
+                    </div>
                 </div>
-                <div class="flex flex-col gap-1">
-                    <div class="flex items-center gap-1">
-                        <p class="font-semibold text-sm leading-[21px]">Payment Success</p>
-                        <div class="w-5 h-5 flex shrink-0">
-                            <img src="{{ asset('assets/images/icons/verify.svg') }}" alt="icon">
+
+                <!-- Delivery Status Section -->
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-col">
+                            <h3 class="font-semibold text-base">Delivery Status</h3>
+                        </div>
+                        <div class="flex items-center gap-2 rounded-full bg-[#F4F4F6] px-3 py-1">
+                            <span class="text-xs text-[#6E6E70]">Status</span>
+                            <span class="text-xs font-semibold">
+                                {{ str_replace('_', ' ', $productDetails->delivery_status ?? 'on_process') }}
+                            </span>
                         </div>
                     </div>
-                    <p class="text-xs leading-[18px]">Pembayaran Anda sudah kami terima dan kami akan segera mengirim pesanan anda</p>
-                </div>
-            </div>
-            @else
-            <div id="Payment-pending" class="flex items-center rounded-2xl p-[14px_16px] gap-4 bg-[#FCCF2F]">
-                <div class="w-6 h-6 flex shrink-0">
-                    <img src="{{ asset('assets/images/icons/note-black.svg') }}" alt="icon">
-                </div>
-                <div class="flex flex-col gap-1">
-                    <div class="flex items-center gap-1">
-                        <p class="font-semibold text-sm leading-[21px]">Payment Pending</p>
+
+                    @php
+                        $statuses = ['on_process', 'on_delivery', 'delivered'];
+                        $statusMeta = [
+                            'on_process' => [
+                                'label' => 'On Process',
+                                'desc' => 'Pesanan sedang diproses oleh admin',
+                                'icon' => 'assets/images/icons/clock.svg',
+                                'bg' => 'bg-[#EEF4FF]',
+                                'text' => 'text-[#2F5BFF]',
+                                'ring' => 'ring-[#C7D8FF]'
+                            ],
+                            'on_delivery' => [
+                                'label' => 'On Delivery',
+                                'desc' => 'Pesanan sedang dikirim ke alamat tujuan',
+                                'icon' => 'assets/images/icons/truck.svg',
+                                'bg' => 'bg-[#FFF7E6]',
+                                'text' => 'text-[#B26A00]',
+                                'ring' => 'ring-[#FFDCA8]'
+                            ],
+                            'delivered' => [
+                                'label' => 'Delivered',
+                                'desc' => 'Pesanan sudah diterima pelanggan',
+                                'icon' => 'assets/images/icons/box.svg',
+                                'bg' => 'bg-[#ECFDF3]',
+                                'text' => 'text-[#157F3D]',
+                                'ring' => 'ring-[#C7F2D6]'
+                            ],
+                        ];
+                        $currentStatus = $productDetails->delivery_status ?? 'on_process';
+                        $currentIndex = array_search($currentStatus, $statuses, true);
+                        $currentIndex = $currentIndex === false ? 0 : $currentIndex;
+                    @endphp
+
+                    <div class="flex flex-col gap-4">
+                        @foreach($statuses as $index => $status)
+                            @php
+                                $isCurrent = $currentIndex === $index;
+                                $isCompleted = $currentIndex > $index;
+                                $isUpcoming = $currentIndex < $index;
+                            @endphp
+                            <div class="flex items-start gap-3">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-10 h-10 rounded-2xl flex items-center justify-center ring-1
+                                        {{ $isCompleted ? 'bg-[#ECFDF3] ring-[#C7F2D6]' : ($isCurrent ? $statusMeta[$status]['bg'].' '.$statusMeta[$status]['ring'] : 'bg-[#F4F4F6] ring-[#E5E7EB]') }}">
+                                        @if($isCompleted)
+                                            <img src="{{ asset('assets/images/icons/verify.svg') }}" alt="icon" class="w-5 h-5" />
+                                        @elseif($isCurrent)
+                                            <img src="{{ asset('assets/images/icons/verify.svg') }}" alt="icon" class="w-5 h-5" />
+                                        @else
+                                            <div class="w-5 h-5 opacity-60" ></div>
+                                        @endif
+                                    </div>
+                                    @if(!$loop->last)
+                                        <div class="w-[2px] h-10 {{ $isCompleted ? 'bg-[#34D399]' : 'bg-[#E5E7EB]' }}"></div>
+                                    @endif
+                                </div>
+
+                                <div class="flex-1 rounded-2xl p-4 ring-1
+                                    {{ $isCompleted ? 'bg-[#ECFDF3] ring-[#C7F2D6]' : ($isCurrent ? $statusMeta[$status]['bg'].' '.$statusMeta[$status]['ring'] : 'bg-white ring-[#EDEEF0]') }}">
+                                    <div class="flex items-center gap-2">
+                                        <p class="font-semibold {{ $isUpcoming ? 'text-[#6E6E70]' : $statusMeta[$status]['text'] }}">
+                                            {{ $statusMeta[$status]['label'] }}
+                                        </p>
+                                    </div>
+                                    <p class="text-xs leading-[18px] text-[#6E6E70]">{{ $statusMeta[$status]['desc'] }}</p>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
-                    <p class="text-xs leading-[18px]">Admin sedang memeriksa transaksi, hubungi CS jika transaksi anda blm juga diproses</p>
                 </div>
-            </div>
+            @else
+                <div id="Payment-pending" class="flex items-center rounded-2xl p-[14px_16px] gap-4 bg-[#FCCF2F]">
+                    <div class="w-6 h-6 flex shrink-0">
+                        <img src="{{ asset('assets/images/icons/note-black.svg') }}" alt="icon">
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <div class="flex items-center gap-1">
+                            <p class="font-semibold text-sm leading-[21px]">Payment Pending</p>
+                        </div>
+                        <p class="text-xs leading-[18px]">Admin sedang memeriksa transaksi, hubungi CS jika transaksi anda
+                            blm juga diproses</p>
+                    </div>
+                </div>
             @endif
-            
-            
+
+
             <hr class="border-[#EDEEF0]">
             <div class="flex items-center gap-[14px]">
                 <div class="w-20 h-20 flex shrink-0 rounded-2xl overflow-hidden bg-[#F6F6F6] items-center">
                     <div class="w-full h-[50px] flex shrink-0 justify-center">
-                        <img src="{{ Storage::url($productDetails->product->photo) }}" class="h-full w-full object-contain" alt="thumbnail">
+                        <img src="{{ Storage::url($productDetails->product->photo) }}"
+                            class="h-full w-full object-contain" alt="thumbnail">
                     </div>
                 </div>
                 <div class="w-full flex flex-col gap-2">
@@ -133,7 +224,7 @@
                     </div>
                 </div>
 
-                
+
                 <div class="info-card flex flex-col gap-2">
                     <p class="font-semibold">Catatan</p>
                     <div class="flex items-center rounded-2xl p-[18px_14px] gap-3 bg-[#F4F4F6]">
@@ -146,9 +237,9 @@
                         </div>
                     </div>
                 </div>
-             
-                
-               
+
+
+
                 <div class="info-card flex flex-col gap-2">
                     <p class="font-semibold">Home Deliver to</p>
                     <div class="flex items-center rounded-2xl p-[18px_14px] gap-3 bg-[#F4F4F6]">
@@ -160,8 +251,8 @@
                         </div>
                     </div>
                 </div>
-                
-                
+
+
             </section>
             <hr class="border-[#EDEEF0]">
             <div id="Payment-details" class="flex flex-col gap-3">
@@ -169,17 +260,21 @@
                 <div class="flex flex-col gap-4">
                     <div class="flex items-center justify-between">
                         <p>Sub total</p>
-                        <p class="font-bold text-xl leading-[30px] underline">{{ 'Rp ' . number_format($subTotal, 0, ',', '.') }}</p>
+                        <p class="font-bold text-xl leading-[30px] underline">
+                            {{ 'Rp ' . number_format($subTotal, 0, ',', '.') }}</p>
                     </div>
                 </div>
             </div>
         </section>
-        <div id="Bottom-nav" class="fixed bottom-0 max-w-[640px] w-full mx-auto border-t border-[#F1F1F1] overflow-hidden z-10">
+        <div id="Bottom-nav"
+            class="fixed bottom-0 max-w-[640px] w-full mx-auto border-t border-[#F1F1F1] overflow-hidden z-10">
             <div class="bg-white/50 backdrop-blur-sm absolute w-full h-full"></div>
             <div class="flex items-center justify-between p-5 relative z-10">
-                <a href="" class="rounded-full p-[12px_24px] bg-[#FCCF2F] font-bold w-full text-center">Contact Customer Service</a>
+                <a href="" class="rounded-full p-[12px_24px] bg-[#FCCF2F] font-bold w-full text-center">Contact Customer
+                    Service</a>
             </div>
         </div>
     </main>
 </body>
+
 </html>

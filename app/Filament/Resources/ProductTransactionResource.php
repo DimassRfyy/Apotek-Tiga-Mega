@@ -64,6 +64,14 @@ class ProductTransactionResource extends Resource
                 Forms\Components\Select::make('product_id')
                     ->relationship('product', 'name')
                     ->required(),
+                Forms\Components\Select::make('delivery_status')
+                    ->options([
+                        'on_process' => 'On Process',
+                        'on_delivery' => 'On Delivery',
+                        'delivered' => 'Delivered',
+                    ])
+                    ->default('on_process')
+                    ->required()
             ]);
     }
 
@@ -93,6 +101,8 @@ class ProductTransactionResource extends Resource
                 ->sortable(),
                 Tables\Columns\TextColumn::make('product.name')
                     ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('delivery_status')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

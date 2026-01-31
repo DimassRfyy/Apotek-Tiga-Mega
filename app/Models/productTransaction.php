@@ -21,6 +21,7 @@ class productTransaction extends Model
         'total_amount',
         'note',
         'product_id',
+        'delivery_status',
     ];
 
     public static function generateUniqueTrxId(){
